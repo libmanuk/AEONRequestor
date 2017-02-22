@@ -1,0 +1,1066 @@
+<% # display embedded viewer for OHMS object -%>
+
+ <% # spokedb record fields -%>
+   <% id = @document[:id] %>
+	<% if @document[:cachefile_display] -%>
+   		<% urlcache = @document[:cachefile_display].first %>
+	<% end -%>
+	<% if @document[:recordtype_display] -%>
+   		<% series = @document[:recordtype_display].first %>
+	<% end -%>
+	<% if @document[:series_display] -%>
+   		<% series = @document[:series_display].first %>
+	<% end -%>
+	<% if @document[:collection_display] -%>
+   		<% collection = @document[:collection_display].first %>
+	<% end -%>
+	<% if @document[:subordinate_interview_count_i] -%>
+   		<% intcount = @document[:subordinate_interview_count_i] %>
+	<% end -%>	
+	<% if @document[:keyword_display] -%>
+   		<% keyword = @document[:keyword_display].first %>
+	<% end -%>  
+	<% if @document[:theme_display] -%>
+   		<% theme = @document[:theme_display].first %>
+	<% end -%>  
+	<% if @document[:subject_display] -%>
+   		<% subject = @document[:subject_display].first %>
+	<% end -%>  
+	<% if @document[:links_display] -%>
+   		<% links = @document[:links_display].first %>
+	<% end -%> 
+ 	<% if @document[:title_added_entry_display] -%>
+   		<% summary = @document[:title_added_entry_display].first %>
+	<% end -%>    
+ 	<% if @document[:material_type_display] -%>
+   		<% media = @document[:material_type_display].first %>
+	<% end -%>     
+ 	<% if @document[:restriction_display] -%>
+   		<% restriction = @document[:restriction_display].first %>
+	<% end -%>     
+ 	<% if @document[:interviewee_display] -%>
+   		<% interviewee = @document[:interviewee_display].first %>
+	<% end -%>   
+ 	<% if @document[:author_display] -%>
+   		<% author = @document[:author_display].first %>
+	<% end -%>    
+ 	<% if @document[:interviewer_display] -%>
+   		<% interviewer = @document[:interviewer_display].first %>
+	<% end -%>    
+ 	<% if @document[:accession_number_display] -%>
+   		<% accession = @document[:accession_number_display].first %>
+	<% end -%>    
+ 	<% if @document[:date_display] -%>
+   		<% interviewdate = @document[:date_display].first %>
+	<% end -%> 
+ 	<% if @document[:related_series_display] -%>
+   		<% relation = @document[:related_series_display].first %>
+	<% end -%>    
+ 	<% if @document[:interview_image_display] -%>
+   		<% image = @document[:interview_image_display].first %>
+	<% end -%>   
+ 	<% if @document[:title_display] -%>
+   		<% title = @document[:title_display].first %>
+	<% end -%>  
+
+<% if @document[:recordtype_display].include? "interview" -%>
+<% if urlcache %>
+	<style>
+		.tabrow {
+		    text-align: left;
+		    list-style: none;
+		    margin: 20px 0 20px;
+		    padding: 5;
+		    line-height: 24px;
+		    height: 26px;
+		    overflow: hidden;
+		    font-size: 12px;
+		    font-family: verdana;
+		    position: relative;
+		}
+		.tabrow li {
+		    border: 1px solid #AAA;
+		    background: #D1D1D1;
+		    background: -o-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+		    background: -ms-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+		    background: -moz-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+		    background: -webkit-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+		    background: linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+		    display: inline-block;
+		    position: relative;
+		    z-index: 0;
+		    border-top-left-radius: 6px;
+		    border-top-right-radius: 6px;
+		    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
+		    text-shadow: 0 1px #FFF;
+		    margin: 0 -5px;
+		    padding: 0 20px;
+		}
+		.tabrow a {
+			  text-decoration: none;
+		}
+		.tabrow li.active {
+		    background: #FFF;
+		    color: #333;
+		    z-index: 2;
+		    border-bottom-color: #FFF;
+		}
+		.tabrow:before {
+		    position: absolute;
+		    content: " ";
+		    width: 100%;
+		    bottom: 0;
+		    left: 0;
+		    border-bottom: 1px solid #AAA;
+		    z-index: 1;
+		}
+		.tabrow li:before,
+		.tabrow li:after {
+		    border: 1px solid #AAA;
+		    position: absolute;
+		    bottom: -1px;
+		    width: 5px;
+		    height: 5px;
+		    content: " ";
+		}
+		.tabrow li:before {
+		    left: -6px;
+		    border-bottom-right-radius: 6px;
+		    border-width: 0 1px 1px 0;
+		    box-shadow: 2px 2px 0 #D1D1D1;
+		}
+		.tabrow li:after {
+		    right: -6px;
+		    border-bottom-left-radius: 6px;
+		    border-width: 0 0 1px 1px;
+		    box-shadow: -2px 2px 0 #D1D1D1;
+		}
+		.tabrow li.active:before {
+		    box-shadow: 2px 2px 0 #FFF;
+		}
+		.tabrow li.active:after {
+		    box-shadow: -2px 2px 0 #FFF;
+		}
+.tab-content.hide{
+    display: none;
+}
+.tab-content.active{
+    display: block;
+}
+	</style>
+	<script>
+	$(document).ready(function() {
+		$('.tabrow > li > a').click(function(event){
+		event.preventDefault();//stop browser to take action for clicked anchor
+					
+		//get displaying tab content jQuery selector
+		var active_tab_selector = $('.tabrow > li.active > a').attr('href');					
+					
+		//find actived navigation and remove 'active' css
+		var actived_nav = $('.tabrow > li.active');
+		actived_nav.removeClass('active');
+					
+		//add 'active' css into clicked navigation
+		$(this).parents('li').addClass('active');
+					
+		//hide displaying tab content
+		$(active_tab_selector).removeClass('active');
+		$(active_tab_selector).addClass('hide');
+					
+		//show target tab content
+		var target_tab_selector = $(this).attr('href');
+		$(target_tab_selector).removeClass('hide');
+		$(target_tab_selector).addClass('active');
+	     });
+	  });
+	</script>
+	<script>
+		$(function() {
+			$(".tabrow li").click(function(e) {
+			  e.preventDefault();
+			  $(".tabrow li").removeClass("active");
+			  $(this).addClass("active");
+			});
+		});
+	</script>
+	<ul class="tabrow">
+	    <li class="active"><a href="#metadata">Description</a></li>
+	    <li><a href="#access">Access Interview</a></li>
+	    <li><a href="#request">Request Interview</a></li>
+	</ul>
+<section id="access" class="tab-content hide">
+<div>
+<div style='width: 100%; height: 1200px; margin-left: auto; margin-right: auto;'><p style='width: 95%; height: 1200px; margin-left: auto; margin-right: auto;'><iframe src='https://kentuckyoralhistory.org/oh/render.php?cachefile=<%= accession %>_ohm.xml' width='95%' height='1200px' frameborder='0' name='viewer' scrolling='no'></iframe></p></div>
+</div>
+</section>
+<section id="metadata" class="tab-content active">
+<br/><br/>
+<% end -%>
+<% if image -%>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Featured Image:&nbsp;</div>
+</td>
+<td>
+<div class="field-items">
+<div class="field-item even"><img src="https://kentuckyoralhistory.org/spokedbimages/<%= image %>.png" style="float:left;width:120px;"/></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<br/>
+</section>
+<section id="request" class="tab-content hide">
+<% if @document[:recordtype_display].include? "interview" -%>
+<div>
+<div>
+<p>Submit a request for access to a copy of this interview.  If you do not have an account, you will be prompted to set up an account in order to submit this request.  If you already have an account, log in to your account when prompted. </p>
+<div style="float:left;margin-top:5px;">
+<FORM NAME=order ACTION="requests.html" onSubmit="AddToCart(this);">
+<input type=hidden name=QUANTITY value="1">
+<input type="submit" value="Add Interview to Requests">
+<input type=hidden name=NAME value="Interview with <%= author %>, <%= interviewdate %>">
+<input type=hidden name=ID_NUM value="<%= accession %>">
+<input type=hidden name=RESTRICTION value="<%= restriction %>">
+<input type=hidden name=DATE value="<%= interviewdate %>">
+<input type=hidden name=LINK value="<%= id %>">
+<input type="hidden" name="PROJECT" value="<%= @document[:series_accession_number] %>">
+<% @document[:related_series_display].each do |item| -%>
+<% relation = JSON.parse(item) -%>
+<!--<input type=hidden name=PROJECT value="<%= relation['label'] %>">-->
+<% end -%>
+</FORM>
+<br/>
+<p>To request an interview using our request system, you have accepted (or for first-time users you will need to accept) the terms of our user agreement below.</p>
+
+<p>USER AGREEMENT<br/>
+LOUIE B. NUNN CENTER FOR ORAL HISTORY<br/>
+COPYRIGHTED MATERIALS<br/>
+</p>
+
+<p>This AGREEMENT is for materials whose intellectual and physical property rights reside with the University of Kentucky (UK) through creation, purchase, gift/donation, or has been assigned to the University of Kentucky for the purpose of research or publication.</p>
+<p>Use of materials is expressly limited as described in this user agreement. As a condition of UK providing recorded interview(s) THROUGH THIS ONLINE PATRON ACCOUNT OR OTHER DELIVERY METHOD, and/or subsequent transcript(s) of such, you agree to strictly abide by the following:<br/>
+&copy; Copyright to the recorded interview(s) and/or subsequent transcript(s) of such remains with the University of Kentucky and when use is permitted appropriate copyright credit must be given to UK:<br/><br/>
+University of Kentucky, all rights reserved, (Project Name), Louie B. Nunn Center for Oral History, University of Kentucky Libraries.</p>
+<p>WHEN permission is granted, it is for one time use only and any subsequent use, including reproduction of recorded interview(s) and/or subsequent transcript(s) of such will require an additional user agreement.</p>
+<p>While the University of Kentucky asserts ownership of the items, your use of the recorded interview(s) and/or subsequent transcript(s) of such is strictly at your own risk. The user agrees to hold harmless UK, their officers, directors, employees and affiliated entities, any and all of them, against and from any liability, loss, cost, or expense whatsoever, including attorney's fees, arising out of or relating to use of the recorded interview(s) and/or subsequent transcript(s) of such. UK is solely responsible for making the recorded interview(s) and/or subsequent transcript(s) of such available to you pursuant to this user agreement.</p>
+<p>User agrees that any violation of this user agreement will cause irreparable harm to UK, agrees that injunctive relief (a court order directing that you cease activity) is an appropriate remedy and consents to such relief. Injunctive relief will be in addition to any and all remedies that may be available.</p>
+<p>I understand that I must provide the University of Kentucky Libraries two (2) copies of any published work (includes books, journals, pamphlets, flyers, buttons, labels, video productions, etc.) free of charge. Ship to the address below:<br/><br/>
+Louie B. Nunn Center for Oral History<br/>
+Special Collections<br/>
+University of Kentucky Libraries<br/>
+Margaret I. King Building<br/>
+Lexington, KY 40506-0039<br/>
+</p>
+</div>
+<br/>
+</div>
+</div>
+</section>
+<% end -%>
+
+<% end %>
+<% if not urlcache %>
+	<style>
+		.tabrow {
+		    text-align: left;
+		    list-style: none;
+		    margin: 20px 0 20px;
+		    padding: 5;
+		    line-height: 24px;
+		    height: 26px;
+		    overflow: hidden;
+		    font-size: 12px;
+		    font-family: verdana;
+		    position: relative;
+		}
+		.tabrow li {
+		    border: 1px solid #AAA;
+		    background: #D1D1D1;
+		    background: -o-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+		    background: -ms-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+		    background: -moz-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+		    background: -webkit-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+		    background: linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+		    display: inline-block;
+		    position: relative;
+		    z-index: 0;
+		    border-top-left-radius: 6px;
+		    border-top-right-radius: 6px;
+		    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
+		    text-shadow: 0 1px #FFF;
+		    margin: 0 -5px;
+		    padding: 0 20px;
+		}
+		.tabrow a {
+			  text-decoration: none;
+		}
+		.tabrow li.active {
+		    background: #FFF;
+		    color: #333;
+		    z-index: 2;
+		    border-bottom-color: #FFF;
+		}
+		.tabrow:before {
+		    position: absolute;
+		    content: " ";
+		    width: 100%;
+		    bottom: 0;
+		    left: 0;
+		    border-bottom: 1px solid #AAA;
+		    z-index: 1;
+		}
+		.tabrow li:before,
+		.tabrow li:after {
+		    border: 1px solid #AAA;
+		    position: absolute;
+		    bottom: -1px;
+		    width: 5px;
+		    height: 5px;
+		    content: " ";
+		}
+		.tabrow li:before {
+		    left: -6px;
+		    border-bottom-right-radius: 6px;
+		    border-width: 0 1px 1px 0;
+		    box-shadow: 2px 2px 0 #D1D1D1;
+		}
+		.tabrow li:after {
+		    right: -6px;
+		    border-bottom-left-radius: 6px;
+		    border-width: 0 0 1px 1px;
+		    box-shadow: -2px 2px 0 #D1D1D1;
+		}
+		.tabrow li.active:before {
+		    box-shadow: 2px 2px 0 #FFF;
+		}
+		.tabrow li.active:after {
+		    box-shadow: -2px 2px 0 #FFF;
+		}
+.tab-content.hide{
+    display: none;
+}
+.tab-content.active{
+    display: block;
+}
+	</style>
+	<script>
+	$(document).ready(function() {
+		$('.tabrow > li > a').click(function(event){
+		event.preventDefault();//stop browser to take action for clicked anchor
+					
+		//get displaying tab content jQuery selector
+		var active_tab_selector = $('.tabrow > li.active > a').attr('href');					
+					
+		//find actived navigation and remove 'active' css
+		var actived_nav = $('.tabrow > li.active');
+		actived_nav.removeClass('active');
+					
+		//add 'active' css into clicked navigation
+		$(this).parents('li').addClass('active');
+					
+		//hide displaying tab content
+		$(active_tab_selector).removeClass('active');
+		$(active_tab_selector).addClass('hide');
+					
+		//show target tab content
+		var target_tab_selector = $(this).attr('href');
+		$(target_tab_selector).removeClass('hide');
+		$(target_tab_selector).addClass('active');
+	     });
+	  });
+	</script>
+	<script>
+		$(function() {
+			$(".tabrow li").click(function(e) {
+			  e.preventDefault();
+			  $(".tabrow li").removeClass("active");
+			  $(this).addClass("active");
+			});
+		});
+	</script>
+	<ul class="tabrow">
+	    <li class="active"><a href="#metadata">Description</a></li>
+	    <li><a href="#request">Request Interview</a></li>
+	</ul>
+<section id="metadata" class="tab-content active">
+<br/><br/>
+<% end -%>
+<% if image -%>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Featured Image:&nbsp;</div>
+</td>
+<td>
+<div class="field-items">
+<div class="field-item even"><img src="https://kentuckyoralhistory.org/spokedbimages/<%= image %>.png" style="float:left;width:120px;"/></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<br/>
+
+
+
+<% end %>
+<% if summary -%>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Description:&nbsp;</div>
+</td>
+<td style="width: 180px;">
+<div style="width: 771px;">
+<div style="width: 771px;"><span><%= summary %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<br/>
+<% end %>
+<% if accession %>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Interview Accession:&nbsp;</div>
+<div>
+<div><span><%= accession %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if author %>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Interviewee:&nbsp;</div>
+<div>
+<div><span>
+<% @document[:author_display].each do |author| -%>
+<a href="https://kentuckyoralhistory.org/catalog?utf8=%E2%9C%93&op=AND&all_fields=&title=&interviewee=<%= author %>&interviewer=&keyword=&theme=&subject=&sort=score+desc%2C+pub_date_sort+desc%2C+title_sort+asc&search_field=advanced&commit=Search"><%= author %></a>&nbsp;&nbsp;
+<% end -%>
+</span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if interviewer %>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Interviewer:&nbsp;</div>
+<div>
+<div><span>
+<% @document[:interviewer_display].each do |interviewer| -%>
+<a href="https://kentuckyoralhistory.org/catalog?utf8=%E2%9C%93&op=AND&all_fields=&title=&interviewee=&interviewer=<%= interviewer %>&keyword=&theme=&subject=&sort=score+desc%2C+pub_date_sort+desc%2C+title_sort+asc&search_field=advanced&commit=Search"><%= interviewer %></a>&nbsp;&nbsp;
+<% end -%>
+</span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if interviewdate %>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Interview Date:&nbsp;</div>
+<div>
+<div><span><%= interviewdate %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if keyword %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Interview Keywords:&nbsp;</div>
+</td>
+<td>
+<div>
+<div>
+<span>
+<% @document[:keyword_display].each do |keyword| -%>
+<a href="https://kentuckyoralhistory.org/catalog?utf8=%E2%9C%93&op=AND&all_fields=&title=&author=&keyword=<%= keyword %>&subject=&sort=score+desc%2C+pub_date_sort+desc%2C+title_sort+asc&search_field=advanced&commit=Search"><%= keyword %></a>&nbsp;&nbsp;
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if theme %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Themes:&nbsp;</div>
+</td>
+<td>
+<div>
+<div>
+<span>
+<% @document[:theme_display].each do |theme| -%>
+<a href="https://kentuckyoralhistory.org/catalog?utf8=%E2%9C%93&op=AND&all_fields=&title=&author=&interviewee=&interviewer=&keyword=&theme=<%= theme %>&subject=&sort=score+desc%2C+pub_date_sort+desc%2C+title_sort+asc&search_field=advanced&commit=Search"><%= theme %></a>&nbsp;&nbsp;
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if subject %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">LC Subjects:&nbsp;</div>
+</td>
+<td>
+<div>
+<div><span>
+<% @document[:subject_display].each do |subject| -%>
+<a href="https://kentuckyoralhistory.org/?f%5Bsubject_facet%5D%5B%5D=<%= subject %>"><%= subject %></a>&nbsp;&nbsp;
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if links %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">External Links:&nbsp;</div>
+</td>
+<td>
+<div>
+<div><span>
+<% @document[:links_display].each do |link| -%>
+<% label, url = link.split('|') %>
+(<%= label %>)&nbsp;<a href="<%= url %>" target="_blank"><%= url %></a>&nbsp;&nbsp;<br/>
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if restriction %>
+<br/>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Restriction:&nbsp;</div>
+<div>
+<div><span><%= restriction %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if relation %>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Project:&nbsp;</div>
+<div>
+<div><span>
+<% @document[:related_series_display].each do |item| -%>
+<% relation = JSON.parse(item) -%>
+  <%= link_to relation['label'], solr_document_path(relation['id']) %> (<%= link_to @document[:series_accession_number], solr_document_path(relation['id']) %>)<br/>
+<% end -%>
+</span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+</section>
+<section id="request" class="tab-content hide">
+<% if @document[:recordtype_display].include? "interview" -%>
+<div>
+<div>
+<p>Submit a request for access to a copy of this interview.  If you do not have an account, you will be prompted to set up an account in order to submit this request.  If you already have an account, log in to your account when prompted. </p>
+<div style="float:left;margin-top:5px;">
+<FORM NAME=order ACTION="https://kentuckyoralhistory.org/requests.html" onSubmit="AddToCart(this);">
+<input type=hidden name=QUANTITY value="1">
+<input type="submit" value="Add Interview to Requests">
+<input type=hidden name=NAME value="Interview with <%= author %>, <%= interviewdate %>">
+<input type=hidden name=ID_NUM value="<%= accession %>">
+<input type=hidden name=RESTRICTION value="<%= restriction %>">
+<input type=hidden name=DATE value="<%= interviewdate %>">
+<input type=hidden name=LINK value="<%= id %>">
+<input type="hidden" name="PROJECT" value="<%= @document[:series_accession_number] %>">
+<% @document[:related_series_display].each do |item| -%>
+<% relation = JSON.parse(item) -%>
+<!--<input type=hidden name=PROJECT value="<%= relation['label'] %>">-->
+<% end -%>
+</FORM>
+<br/>
+<p>To request an interview using our request system, you have accepted (or for first-time users you will need to accept) the terms of our user agreement below.</p>
+
+<p>USER AGREEMENT<br/>
+LOUIE B. NUNN CENTER FOR ORAL HISTORY<br/>
+COPYRIGHTED MATERIALS<br/>
+</p>
+
+<p>This AGREEMENT is for materials whose intellectual and physical property rights reside with the University of Kentucky (UK) through creation, purchase, gift/donation, or has been assigned to the University of Kentucky for the purpose of research or publication.</p>
+<p>Use of materials is expressly limited as described in this user agreement. As a condition of UK providing recorded interview(s) THROUGH THIS ONLINE PATRON ACCOUNT OR OTHER DELIVERY METHOD, and/or subsequent transcript(s) of such, you agree to strictly abide by the following:<br/>
+Copyright to the recorded interview(s) and/or subsequent transcript(s) of such remains with the University of Kentucky and when use is permitted appropriate copyright credit must be given to UK:<br/><br/>
+&copy; University of Kentucky, all rights reserved, (Project Name), Louie B. Nunn Center for Oral History, University of Kentucky Libraries.</p>
+<p>WHEN permission is granted, it is for one time use only and any subsequent use, including reproduction of recorded interview(s) and/or subsequent transcript(s) of such will require an additional user agreement.</p>
+<p>While the University of Kentucky asserts ownership of the items, your use of the recorded interview(s) and/or subsequent transcript(s) of such is strictly at your own risk. The user agrees to hold harmless UK, their officers, directors, employees and affiliated entities, any and all of them, against and from any liability, loss, cost, or expense whatsoever, including attorney's fees, arising out of or relating to use of the recorded interview(s) and/or subsequent transcript(s) of such. UK is solely responsible for making the recorded interview(s) and/or subsequent transcript(s) of such available to you pursuant to this user agreement.</p>
+<p>User agrees that any violation of this user agreement will cause irreparable harm to UK, agrees that injunctive relief (a court order directing that you cease activity) is an appropriate remedy and consents to such relief. Injunctive relief will be in addition to any and all remedies that may be available.</p>
+<p>I understand that I must provide the University of Kentucky Libraries two (2) copies of any published work (includes books, journals, pamphlets, flyers, buttons, labels, video productions, etc.) free of charge. Ship to the address below:<br/><br/>
+Louie B. Nunn Center for Oral History<br/>
+Special Collections<br/>
+University of Kentucky Libraries<br/>
+Margaret I. King Building<br/>
+Lexington, KY 40506-0039<br/>
+</p>
+</div>
+<br/>
+</div>
+</div>
+<% end -%>
+</section>
+
+
+<!-- end of interview record -->
+
+
+<% elsif @document[:recordtype_display].include? "collection" -%>
+<% if summary -%>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Description:&nbsp;</div>
+</td>
+<td style="width: 180px;">
+<div style="width: 771px;">
+<div style="width: 771px;"><span><%= summary %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<br/>
+<% end %>
+<% if accession %>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Collection Accession:&nbsp;</div>
+<div>
+<div><span><%= accession %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if keyword %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Interview Keywords:&nbsp;</div>
+</td>
+<td>
+<div>
+<div>
+<span>
+<% @document[:keyword_display].each do |keyword| -%>
+<a href="https://kentuckyoralhistory.org/catalog?utf8=%E2%9C%93&op=AND&all_fields=&title=&author=&keyword=<%= keyword %>&subject=&sort=score+desc%2C+pub_date_sort+desc%2C+title_sort+asc&search_field=advanced&commit=Search"><%= keyword %></a>&nbsp;&nbsp;
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if theme %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Themes:&nbsp;</div>
+</td>
+<td>
+<div>
+<div>
+<span>
+<% @document[:theme_display].each do |theme| -%>
+<a href="https://kentuckyoralhistory.org/catalog?utf8=%E2%9C%93&op=AND&all_fields=&title=&author=&interviewee=&interviewer=&keyword=&theme=<%= theme %>&subject=&sort=score+desc%2C+pub_date_sort+desc%2C+title_sort+asc&search_field=advanced&commit=Search"><%= theme %></a>&nbsp;&nbsp;
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if subject %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">LC Subjects:&nbsp;</div>
+</td>
+<td>
+<div>
+<div><span>
+<% @document[:subject_display].each do |subject| -%>
+<a href="https://kentuckyoralhistory.org/?f%5Bsubject_facet%5D%5B%5D=<%= subject %>"><%= subject %></a>&nbsp;&nbsp;
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if links %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">External Links:&nbsp;</div>
+</td>
+<td>
+<div>
+<div><span>
+<% @document[:links_display].each do |link| -%>
+<% label, url = link.split('|') %>
+(<%= label %>)&nbsp;<a href="<%= url %>" target="_blank"><%= url %></a>&nbsp;&nbsp;<br/>
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if restriction %>
+<br/>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Restriction:&nbsp;</div>
+<div>
+<div><span><%= restriction %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if intcount %>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Number of Interviews:&nbsp;</div>
+<div>
+<div><span><%= intcount %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if relation %>
+<br/>
+<div>
+<div style="width:960px;">
+<div style="border-bottom: solid thin #DDD;">
+<div style="float: left;width: 250px;padding: 0px;font-weight: bold;">&nbsp;</div>
+<div class="field-items">
+<div class="field-item even"><span>
+<div class="view-content">
+<table class="views-table cols-6">
+<thead>
+<tr>
+<th class="views-field views-field-entity-id">&nbsp;Projects in this Collection:</th>
+<th class="views-field views-field-title">&nbsp;Accession Number:</th>
+</tr>
+</thead>
+<tbody>
+<% @document[:related_series_display].each do |item| -%>
+<% relation = JSON.parse(item) -%>
+<tr class="odd views-row-first"><td class="views-field views-field-entity-id"><%= link_to relation['label'], solr_document_path(relation['id']) %></td><td class="views-field views-field-title"><%= link_to relation['accession_number'], solr_document_path(relation['id']) %></td></tr>
+<% end -%>
+</tbody></table></div><br/>
+</span></div>
+</div>
+</div>
+<% end -%>
+
+<!-- end of collection record -->
+
+<% elsif @document[:recordtype_display].include? "series" -%>
+
+<% if summary -%>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Description:&nbsp;</div>
+</td>
+<td style="width: 180px;">
+<div style="width: 771px;">
+<div style="width: 771px;"><span><%= summary %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<br/>
+<% end %>
+<% if accession %>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Project Accession:&nbsp;</div>
+<div>
+<div><span><%= accession %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if keyword %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Interview Keywords:&nbsp;</div>
+</td>
+<td>
+<div>
+<div>
+<span>
+<% @document[:keyword_display].each do |keyword| -%>
+<a href="https://kentuckyoralhistory.org/catalog?utf8=%E2%9C%93&op=AND&all_fields=&title=&author=&keyword=<%= keyword %>&subject=&sort=score+desc%2C+pub_date_sort+desc%2C+title_sort+asc&search_field=advanced&commit=Search"><%= keyword %></a>&nbsp;&nbsp;
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if theme %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Themes:&nbsp;</div>
+</td>
+<td>
+<div>
+<div>
+<span>
+<% @document[:theme_display].each do |theme| -%>
+<a href="https://kentuckyoralhistory.org/catalog?utf8=%E2%9C%93&op=AND&all_fields=&title=&author=&interviewee=&interviewer=&keyword=&theme=<%= theme %>&subject=&sort=score+desc%2C+pub_date_sort+desc%2C+title_sort+asc&search_field=advanced&commit=Search"><%= theme %></a>&nbsp;&nbsp;
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if subject %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">LC Subjects:&nbsp;</div>
+</td>
+<td>
+<div>
+<div><span>
+<% @document[:subject_display].each do |subject| -%>
+<a href="https://kentuckyoralhistory.org/?f%5Bsubject_facet%5D%5B%5D=<%= subject %>"><%= subject %></a>&nbsp;&nbsp;
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if links %>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">External Links:&nbsp;</div>
+</td>
+<td>
+<div>
+<div><span>
+<% @document[:links_display].each do |link| -%>
+<% label, url = link.split('|') %>
+(<%= label %>)&nbsp;<a href="<%= url %>" target="_blank"><%= url %></a>&nbsp;&nbsp;<br/>
+<% end -%>
+</span>
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if restriction %>
+<br/>
+<div>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Restriction:&nbsp;</div>
+<div>
+<div><span><%= restriction %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if intcount %>
+<div style="border-bottom: solid thin #DDD;">
+<table>
+<tr>
+<td style="width: 180px;">
+<div style="float: left;width: 180px;padding: 0px;font-weight: bold;">Number of Interviews:&nbsp;</div>
+<div>
+<div><span><%= intcount %></span></div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+<% end -%>
+<% if relation %>
+<br/>
+<div>
+<div style="width:960px;">
+<div style="border-bottom: solid thin #DDD;">
+<div style="float: left;width: 250px;padding: 0px;font-weight: bold;">&nbsp;</div>
+<div class="field-items">
+<div class="field-item even"><span>
+<div class="view-content">
+<table class="views-table cols-6">
+<thead>
+<tr>
+<th class="views-field views-field-entity-id">&nbsp;Interviewee(s)</th>
+<th class="views-field views-field-title">&nbsp;Interview Date</th>
+<th class="views-field views-field-title">&nbsp;Accession Number</th>
+<th class="views-field views-field-title">&nbsp;Interviewer</th>
+<th class="views-field views-field-title">&nbsp;Restrictions</th>
+<th class="views-field views-field-title">&nbsp;Access</th>
+</tr>
+</thead>
+<tbody>
+<% @document[:related_series_display].each do |item| -%>
+<% relation = JSON.parse(item) -%>
+<tr class="odd views-row-first"><td class="views-field views-field-entity-id"><% relation['interviewee'].each do |y| -%><%= link_to y, solr_document_path(relation['id']) %><br/><% end -%></td><td class="views-field views-field-title"><%= relation['date'] %></td><td class="views-field views-field-title"><%= link_to relation['accession_number'], solr_document_path(relation['id']) %></td><td class="views-field views-field-title"><% relation['interviewer'].each do |x| -%><%= x %><br/><% end -%></td>
+    <td class="views-field views-field-title">
+        <% if 'False' === relation['rights'] -%>
+            No restrictions
+        <% else -%>
+            Restrictions apply
+        <% end -%>
+    </td>
+    <td class="views-field views-field-title">
+        <%# This should link to the interview record instead. %>
+        <%= link_to "Online", relation['id'] if relation['cachefile'] %>
+    </td>
+</tr>
+<% end -%>
+</tbody></table></div><br/>
+</span></div>
+</div>
+</div>
+<% end -%>
+
+<% end -%>
+
+<p>&nbsp;&nbsp;</p>
+<p>&nbsp;&nbsp;</p>
+<p style="font-size: 80%;">Persistent Link for this Record: <a href="https://kentuckyoralhistory.org/catalog/<%= id %>">https://kentuckyoralhistory.org/catalog/<%= id %></a></p>
+ </div>
+<p>&nbsp;</p>
+
+
+</div></div></div></div></div></div></div>
