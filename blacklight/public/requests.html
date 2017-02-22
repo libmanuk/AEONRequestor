@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
+  "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" version="XHTML+RDFa 1.0" dir="ltr"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:sioc="http://rdfs.org/sioc/ns#"
+  xmlns:sioct="http://rdfs.org/sioc/types#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="/theme_buttons/favicon.ico" type="image/vnd.microsoft.icon" />
+
+  <title>SPOKEdb | Louie B Nunn Center for Oral History</title>
+<link href="/spokedb_blacklight.css" media="all" rel="stylesheet" />
+<link href="/requests.css" media="all" rel="stylesheet" />
+<link rel="stylesheet" media="all" href="/lity.css" />
+  <style type="text/css" media="all">
+@import url("/system.base.css");
+@import url("/system.menus.css");
+@import url("/system.messages.css");
+@import url("/system.theme.css");
+</style>
+<style type="text/css" media="all">
+@import url("/field.css");
+@import url("/node.css");
+@import url("/search.css");
+@import url("/user.css");
+@import url("/views.css");
+</style>
+<style type="text/css" media="all">
+@import url("/ctools.css");
+@import url("/themes.css");
+@import url("/fancy_login.css");
+@import url("/date.css");
+</style>
+<style type="text/css" media="all">
+@import url("/layout.css");
+@import url("/style.css");
+@import url("/colors.css");
+</style>
+<style type="text/css" media="print">
+@import url("/print.css");
+</style>
+<script src="/lity/jquery.js"></script>
+<script src="/lity/lity.js"></script>
+
+		<script type="text/javascript">
+			//MDN PolyFil for IE8 (This is not needed if you use the jQuery version)
+			if (!Array.prototype.forEach){
+				Array.prototype.forEach = function(fun /*, thisArg */){
+				"use strict";
+				if (this === void 0 || this === null || typeof fun !== "function") throw new TypeError();
+				
+				var
+				t = Object(this),
+				len = t.length >>> 0,
+				thisArg = arguments.length >= 2 ? arguments[1] : void 0;
+
+				for (var i = 0; i < len; i++)
+				if (i in t)
+					fun.call(thisArg, t[i], i, t);
+				};
+			}
+		</script>
+
+
+<script>
+$(document).ready(function() {
+   // Executed when select is changed
+    $("select").on('change',function() {
+        var x = this.selectedIndex;
+
+        if (x == "") {
+           $("#sendrequest").hide();
+        } else {
+           $("#sendrequest").show();
+        }
+    });
+    
+    // It must not be visible at first time
+    $("#sendrequest").css("display","none");
+});
+</script>
+
+<!-- Open Graph tags for social media -->
+<meta property="og:image" content="/standard_nunn_ctr.png" />
+
+<!-- CSRF Blacklight tags -->
+<!--<%= csrf_meta_tags %>-->
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-26526087-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+  <style>
+  .checkout {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;}
+  .checkoutinput {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;}   
+  .nopcart {background: #464444;border: 1px;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #ffffff;margin-right: auto;margin-left: auto;}
+  .nopheader {background: #464444;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #FFFFFF;}
+  .nopentry {background: #FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; padding: 12px; color: #000000;}
+  .noptotal {background: #FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;}
+  .nopbutton {background: #FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;} 
+  </style>
+<script src="/language-en.js"></script>
+<script src="/aeoncart.js"></script>
+<script src="/application.js"></script>
+</head>
+<body class="html front not-logged-in no-sidebars page-topics" >
+
+    <div id="skip-link">
+    <a href="#main-content" class="element-invisible element-focusable">Skip to main content</a>
+  </div>
+    <div id="page-wrapper"><div id="page">
+
+  <div id="header" class="without-secondary-menu"><div class="section clearfix">
+
+          <a href="/" title="Home" rel="home" id="logo">
+        <img src="/theme_buttons/logo.png" alt="Home" />
+      </a>
+    
+          <div id="name-and-slogan">
+
+                              <div id="site-name">
+              <strong>
+                <a href="/" title="Home" rel="home"><span>Louie B Nunn Center for Oral History</span></a>
+              </strong>
+            </div>
+                  
+                  <div id="site-slogan">
+            University of Kentucky Libraries          </div>
+        
+      </div> <!-- /#name-and-slogan -->
+        
+      <div class="region region-header">
+
+<div id="block-search-form" class="block block-search">
+
+
+<form class="search-query-form clearfix navbar-form" id="search-block-form" action="/" accept-charset="UTF-8" method="get"><div><div class="container-inline">
+      <div class="form-item form-type-textfield form-item-search-block-form"><input name="utf8" type="hidden" value="&#x2713;" />
+<label for="search_field" class="sr-only" style="visibility:hidden;">Search in</label>
+<select style="visibility:hidden;" name="search_field" id="search_field" title="Targeted search options" class="search_field form-control"><option value="all_fields">All Fields</option>
+<option value="title">Title</option>
+<option value="author">Author</option>
+<option value="subject">Subject</option>
+</select>
+<label for="q" class="sr-only" style="visibility:hidden;">for</label>
+</div>
+<div class="form-actions form-wrapper" id="edit-actions">
+    <div id="header-above-search">Collection Catalog</div>
+<input type="text" name="q" id="q" placeholder="Search..." class="search_q q form-control" autofocus="autofocus" />
+<button type="submit" class="btn btn-primary search-btn" id="search">
+<span class="glyphicon glyphicon-search"></span>
+</button>
+</form>  
+</div>
+</div>
+</div></form> 
+
+
+
+<div id="block-block-8" class="block block-block">
+
+    
+  <div class="content">
+    <div id="header-other-links">
+<div id="header-help-link"><a href="/terms-of-use.html">Terms of Use</a></div>
+<div id="header-nunn-link"><a href="http://libraries.uky.edu/nunncenter" target="_blank">Nunn Center</a></div>
+<div id="header-help-link"><a href="/help.html">Help</a></div>
+</div>  </div>
+</div>
+  </div>
+    
+    </div></div> <!-- /.section /#header -->
+    
+    <div id="sub-header"><div class="section clearfix">
+
+          <div id="main-menu" class="navigation">
+        <div id="social-links">
+          <div id="welcome-facebook"><a href="http://www.facebook.com/pages/Louie-B-Nunn-Center-for-Oral-History/132495076772529" target="_blank"><img src="/facebook.png"/></a></div>
+          <div id="welcome-twitter"><a href="http://twitter.com/nunncenter" target="_blank"><img src="/twitter.png"/></a></div>
+        </div>
+        <h2 class="element-invisible">Main menu</h2><ul id="main-menu-links" class="links clearfix"><li class="menu-198 first active"><a href="/" class="menu-330">Home</a></li>
+<li class="menu-330"><a href="/projects/by-letter/projects.html" title="">Projects</a></li>
+<!--<li class="menu-816"><a href="http://www.kentuckyoralhistory.org/projects/online">Projects Online</a></li>-->
+<li class="menu-361"><a href="/catalog/facet/interviewee_facet?facet.sort=index" title="An alphabetical list of the interviewees in the database.">People</a></li>
+<li class="menu-517"><a href="/catalog/facet/subject_facet?facet.sort=index">Subjects</a></li>
+<li class="menu-563"><a href="/advanced" title="">Advanced Search</a></li>
+</ul>      </div> <!-- /#main-menu -->
+
+
+    
+  </div></div> <!-- /.section, /#sub-header -->
+
+
+
+  </div>
+</div>
+
+
+  </div></div></div></div>
+
+<div>
+
+<br/>
+</div>
+<div>
+<table style="width:960px;color:#000000;text-align:center;margin-left:auto;margin-right:auto;padding:10px;">
+<tbody style="width:960px;">
+<tr>
+<td>
+
+<font face="arial,helvetica"><span style="float: right;"><a href="javascript:history.back()">&ll; Keep Browsing the Catalog</a></span> 
+              <div id="title-wrapper"><h1 class="title" id="page-title">
+      Interview Requests List      </h1></div>
+      <hr id="main_title_hr">
+
+
+
+<script>
+    ManageCart();
+</script>
+
+      
+</td>
+</tr>
+</table>
+
+</font></tr>
+</tbody>
+</table>
+</div>
+<p>&nbsp;</p>
+    <div id="footer-wrapper"><div class="section"><div><div>
+
+    
+          <div id="footer" class="clearfix">
+          <div class="region region-footer">
+    <div id="block-block-5" class="block block-block">
+
+    
+  <div class="content">
+    <div class="footer-info-wrapper">
+<div class="footer-spoke-info footer-spoke-column">
+<img src="/spoke-logo2.png" /><p>Oral History Collection Management System</p>
+<p>Utilizing <a href="http://omeka.org/" target="_blank">Omeka</a> and <a href="http://projectblacklight.org/" target="_blank">Blacklight</a></p>
+</div>
+</div>
+  </div>
+</div>
+<div id="block-block-6" class="block block-block">
+
+    
+  <div class="content">
+    <div id="interview_count">SPOKEdb currently provides access to <br/><iframe src='/intcount.html' width='45px' height='20px' frameborder='0' name='count' scrolling='no'></iframe> interview records.</div><br/>
+<!--<div id="last_updated">Last updated: <strong></strong></div>-->
+  </div>
+</div>
+<div id="block-block-7" class="block block-block">
+
+    
+  <div class="content">
+    <p><a href="http://libraries.uky.edu/nunncenter" target="_blank">Louie B. Nunn Center for Oral History</a><br /><a href="http://libraries.uky.edu/nunncenter" target="_blank">University of Kentucky Libraries</a><br />
+Margaret I. King Building<br />
+Lexington, KY 40506-0039<br />
+(859) 257-9672<br /><a href="mailto:nunncenter@lsv.uky.edu">nunncenter@lsv.uky.edu</a></p>
+  </div>
+</div>
+<div id="block-block-9" class="block block-block">
+
+    
+  <div class="content">
+    <div id="footer-links-wrapper">
+<div class="footer-links" style="margin-top:10px;">
+<ul>
+  <li><a href="/mail/contact.html" data-lity>Contact</a></li>
+  <li><a href="/terms-of-use.html">Terms of Use</a></li>
+  <li class="last"><a href="/citations.html">Citations</a></li></ul>
+</div>
+</div>  </div>
+</div>
+  </div>
+      </div> <!-- /#footer -->
+    
+  </div></div> <!-- /.section, /#footer-wrapper -->
+
+</div></div> <!-- /#page, /#page-wrapper -->
+    <div class="region region-page-bottom">
+  </div>
+
+
+</body>
+</html>
