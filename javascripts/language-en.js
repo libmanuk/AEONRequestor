@@ -1,7 +1,4 @@
-//=====================================================================||
 //                      Language Strings                               ||
-//                     ------------------                              ||
-//---------------------------------------------------------------------||
 strSorry  = "I'm Sorry, your requests list is full.";
 strAdded  = "added";
 strRemove = "Click 'Ok' to remove this interview from your list.";
